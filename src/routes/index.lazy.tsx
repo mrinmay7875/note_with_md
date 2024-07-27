@@ -11,8 +11,9 @@ export const Route = createLazyFileRoute('/')({
 function Index() {
   return (
     <div className='mainContainer'>
-      <Field className='m-50' label='Search for Notes..'>
-        <SearchBox />
+      <Field className='m-50'>
+        {/* TODO:  Increase the width of the search box */}
+        <SearchBox placeholder='Search for notes..' />
       </Field>
       <Field>
         <br />
