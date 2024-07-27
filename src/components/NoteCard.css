@@ -1,0 +1,6 @@
+.tagsContainer {
+    display: flex;
+    flex-direction: row;
+    color: red;
+    gap: 5px;
+}
