@@ -3,9 +3,10 @@ import { Tag } from '../../types/type';
 import { addTag, deleteTag } from '../../slice/tagsSlice';
 import { Button, Input } from '@fluentui/react-components';
 import generateId from '../../utils/generateUniqueId';
+import { RootState } from '../../store/store';
 
 const TagsList = () => {
-  const tags = useSelector((state: any) => state.tags);
+  const tags = useSelector((state: RootState) => state.tags);
   const dispatch = useDispatch();
 
   const handleDelete = (id: string) => {

@@ -10,13 +10,14 @@ import AddNewNoteDialog from '../components/NewNoteDialog/AddNewNoteDialog';
 import { useSelector } from 'react-redux';
 import { Note } from '../types/type';
 import { useState } from 'react';
+import { RootState } from '../store/store';
 
 export const Route = createLazyFileRoute('/')({
   component: Index,
 });
 
 function Index() {
-  const notes = useSelector((state: any) => state.notes);
+  const notes = useSelector((state: RootState) => state.notes);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
 
   const filteredNotes = notes.filter((note: Note) =>

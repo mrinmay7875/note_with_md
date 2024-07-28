@@ -65,6 +65,8 @@ const useStyles = makeStyles({
     marginBottom: '16px',
   },
 });
+import type { RootState } from '../../store/store';
+import { Note } from '../../types/type';
 
 const NoteDetail = () => {
   const styles = useStyles();
@@ -78,12 +80,12 @@ const NoteDetail = () => {
   });
 
   // FIXME: Remove any and resolve TS errors
-  const notes = useSelector((state: any) => state.notes);
-  const note = notes.find((note: any) => note.id === noteId);
+  const notes = useSelector((state: RootState) => state.notes);
+  const note = notes.find((n: Note) => n.id === noteId) as Note | undefined;
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editedTitle, setEditedTitle] = useState(note?.title || '');
-  const [editedBody, setEditedBody] = useState(note?.body || '');
+  const [editedTitle, setEditedTitle] = useState<string>(note?.title || '');
+  const [editedBody, setEditedBody] = useState<string>(note?.body || '');
 
   if (!note) {
     return (

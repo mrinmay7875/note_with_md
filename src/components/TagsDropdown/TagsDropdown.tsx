@@ -11,6 +11,7 @@ import type { ComboboxProps } from '@fluentui/react-components';
 import { Dismiss12Regular } from '@fluentui/react-icons';
 import { useSelector } from 'react-redux';
 import { Tag } from '../../types/type';
+import { RootState } from '../../store/store';
 
 const useStyles = makeStyles({
   root: {
@@ -47,7 +48,7 @@ export const TagsDropdown = ({
   const comboboxInputRef = React.useRef<HTMLInputElement>(null);
 
   // Fetch list of Tags from Store
-  const options = useSelector((state: any) => state.tags).map((tag: Tag) => {
+  const options = useSelector((state: RootState) => state.tags).map((tag: Tag) => {
     return tag.name;
   });
   const styles = useStyles();
