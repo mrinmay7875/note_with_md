@@ -20,9 +20,13 @@ function Index() {
   const notes = useSelector((state: RootState) => state.notes);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
 
-  const filteredNotes = notes.filter((note: Note) =>
-    note.title.toLowerCase().includes(searchKeyword.toLowerCase())
-  );
+  // If Search Term is empty then display all notes, else filter notes based on search
+  const filteredNotes =
+    searchKeyword === '' || searchKeyword === undefined
+      ? notes
+      : notes.filter((note: Note) => {
+          return note.title.toLowerCase().includes(searchKeyword.toLowerCase());
+        });
 
   return (
     <div className='mainContainer'>
