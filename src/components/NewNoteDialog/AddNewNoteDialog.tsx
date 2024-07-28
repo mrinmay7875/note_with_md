@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addNote } from '../../slice/noteSlice';
 import store from '../../store/store';
+import generateId from '../../utils/generateUniqueId';
 
 const useStyles = makeStyles({
   content: {
@@ -70,7 +71,7 @@ export default function NewNoteDialog() {
     if (!hasError) {
       dispatch(
         addNote({
-          id: Date.now().toString(),
+          id: generateId(),
           title: noteTitle,
           body: noteBody,
         })
