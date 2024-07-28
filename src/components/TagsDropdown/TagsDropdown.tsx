@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 });
 
 type TagsDropdownProps = {
-  setSelectedOptionsFromParent: any;
+  setSelectedOptionsFromParent: (selectedOptions: string[]) => void;
 };
 
 export const TagsDropdown = ({
