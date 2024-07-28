@@ -4,3 +4,7 @@
     color: red;
     gap: 5px;
 }
+
+.noteTitle {
+    margin-bottom: 8px;
+}

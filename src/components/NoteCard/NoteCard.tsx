@@ -9,6 +9,7 @@ import {
 
 import './NoteCard.css';
 import { Link } from '@tanstack/react-router';
+import { extractTextFromHTML } from '../../utils/extractTextFromHTML';
 
 type NoteCardProps = {
   id: string;
@@ -20,8 +21,11 @@ type NoteCardProps = {
 const useStyles = makeStyles({
   card: {
     margin: 'auto',
-    width: '300px',
-    maxWidth: '300px',
+    width: '250px',
+    minWidth: '250px',
+    maxWidth: '250px',
+    minHeight: '150px',
+    maxHeight: '150px',
   },
 });
 
@@ -33,7 +37,7 @@ export default function NoteCard({ title, tags, id, body }: NoteCardProps) {
       <Card className={styles.card}>
         <CardHeader
           header={
-            <Body1>
+            <Body1 className='noteTitle'>
               <Link to='/notes/$noteId' params={{ noteId: id }}>
                 {title}
               </Link>
@@ -42,8 +46,8 @@ export default function NoteCard({ title, tags, id, body }: NoteCardProps) {
           description={
             <Caption1>
               {body.length > 50
-                ? body.slice(0, 100) + '...'
-                : body.slice(0, 50)}
+                ? extractTextFromHTML(body).slice(0, 100) + '...'
+                : extractTextFromHTML(body).slice(0, 50)}
             </Caption1>
           }
         />

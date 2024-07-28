@@ -40,18 +40,19 @@ function Index() {
         <AddNewNoteDialog />
       </Field>
       <br />
-      {filteredNotes.map((note: Note) => (
-        <div key={note.id}>
-          <NoteCard
-            key={note.id}
-            title={note.title}
-            tags={note.tags ?? []}
-            id={note.id}
-            body={note.body}
-          />
-          <br />
-        </div>
-      ))}
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {filteredNotes.map((note: Note) => (
+          <div key={note.id} style={{ flex: '0 0 300px', margin: '10px' }}>
+            <NoteCard
+              key={note.id}
+              title={note.title}
+              tags={note.tags ?? []}
+              id={note.id}
+              body={note.body}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
