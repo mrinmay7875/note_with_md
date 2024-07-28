@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from '@tanstack/react-router';
+import { redirect, useParams } from '@tanstack/react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Card,
@@ -58,6 +58,7 @@ const NoteDetail = () => {
     select: (params) => params.noteId,
   });
 
+  // FIXME: Remove any and resolve TS errors
   const notes = useSelector((state: any) => state.notes);
   const note = notes.find((note: any) => note.id === noteId);
 
@@ -85,9 +86,15 @@ const NoteDetail = () => {
 
   const handleDelete = () => {
     // Dispatch an action to delete the note from your Redux store
-    dispatch(deleteNote(noteId));
-
-    // TODO: Redirect to notes list once the Note is deleted
+    if (confirm('Are you sure you want to delete this note ?') == true) {
+      // text = 'You pressed OK!';
+      dispatch(
+        deleteNote({ id: noteId, title: editedTitle, body: editedBody })
+      );
+      alert('Note deleted successfully!');
+      // TODO: Redirect to notes list once the Note is deleted
+      // window.location.href = '/';
+    }
   };
 
   return (
