@@ -11,7 +11,6 @@ import {
   DialogActions,
   makeStyles,
   Field,
-  Textarea,
   Caption1,
 } from '@fluentui/react-components';
 import { useState } from 'react';
@@ -19,7 +18,7 @@ import { useDispatch } from 'react-redux';
 import { addNote } from '../../slice/noteSlice';
 import generateId from '../../utils/generateUniqueId';
 import { TagsDropdown } from '../TagsDropdown/TagsDropdown';
-import Editor from 'react-simple-wysiwyg';
+import Editor, { ContentEditableEvent } from 'react-simple-wysiwyg';
 import { RICHTEXT_EDITOR_HEIGHT_IN_PX_FOR_ADD_NOTE } from '../../config/config';
 const useStyles = makeStyles({
   content: {
@@ -48,9 +47,9 @@ export default function NewNoteDialog() {
 
   const [noteBodyHTML, setNoteBodyHTML] = useState('');
 
-  function onChangeText(e) {
+  function onChangeText(e: ContentEditableEvent) {
     setNoteBodyHTML(e.target.value);
-    console.log('html', noteBodyHTML);
+    // console.log('html', noteBodyHTML);
   }
   /**
    * Handles the form submission event.
@@ -58,7 +57,7 @@ export default function NewNoteDialog() {
    * If the form is valid, displays an alert with the note title and body.
    *
    * @param {React.FormEvent} ev - The form submission event.
-   */
+'   */
   const handleSubmit = (ev: React.FormEvent) => {
     ev.preventDefault();
     const formData = new FormData(ev.currentTarget as HTMLFormElement);

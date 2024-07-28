@@ -7,7 +7,11 @@ import {
   tokens,
   useId,
 } from '@fluentui/react-components';
-import type { ComboboxProps } from '@fluentui/react-components';
+import type {
+  ComboboxProps,
+  OptionOnSelectData,
+  SelectionEvents,
+} from '@fluentui/react-components';
 import { Dismiss12Regular } from '@fluentui/react-icons';
 import { useSelector } from 'react-redux';
 import { Tag } from '../../types/type';
@@ -48,16 +52,21 @@ export const TagsDropdown = ({
   const comboboxInputRef = React.useRef<HTMLInputElement>(null);
 
   // Fetch list of Tags from Store
-  const options = useSelector((state: RootState) => state.tags).map((tag: Tag) => {
-    return tag.name;
-  });
+  const options = useSelector((state: RootState) => state.tags).map(
+    (tag: Tag) => {
+      return tag.name;
+    }
+  );
   const styles = useStyles();
 
   // Handle selectedOptions both when an option is selected or deselected in the Combobox,
   // and when an option is removed by clicking on a tag
   const [selectedOptions, setSelectedOptions] = React.useState<string[]>([]);
 
-  const onSelect: ComboboxProps['onOptionSelect'] = (event, data) => {
+  const onSelect: ComboboxProps['onOptionSelect'] = (
+    _event: SelectionEvents,
+    data: OptionOnSelectData
+  ) => {
     setSelectedOptions(data.selectedOptions);
 
     setSelectedOptionsFromParent(data.selectedOptions);
