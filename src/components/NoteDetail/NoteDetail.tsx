@@ -37,6 +37,7 @@ import {
   Separator,
   Toolbar,
 } from 'react-simple-wysiwyg';
+import { RICHTEXT_EDITOR_HEIGHT_IN_PX_FOR_EDIT_NOTE } from '../../config/config';
 
 const useStyles = makeStyles({
   card: {
@@ -189,6 +190,9 @@ const NoteDetail = () => {
         {isEditing ? (
           <EditorProvider>
             <Editor
+              style={{
+                height: `${RICHTEXT_EDITOR_HEIGHT_IN_PX_FOR_EDIT_NOTE}px`,
+              }}
               value={editedBody}
               onChange={(e) => setEditedBody(e.target.value)}
             >

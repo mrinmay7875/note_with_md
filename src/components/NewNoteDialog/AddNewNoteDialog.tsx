@@ -20,6 +20,7 @@ import { addNote } from '../../slice/noteSlice';
 import generateId from '../../utils/generateUniqueId';
 import { TagsDropdown } from '../TagsDropdown/TagsDropdown';
 import Editor from 'react-simple-wysiwyg';
+import { RICHTEXT_EDITOR_HEIGHT_IN_PX_FOR_ADD_NOTE } from '../../config/config';
 const useStyles = makeStyles({
   content: {
     display: 'flex',
@@ -146,7 +147,9 @@ export default function NewNoteDialog() {
                 </Label>
                 <Field label=''>
                   <Editor
-                    style={{ height: '280px' }}
+                    style={{
+                      height: `${RICHTEXT_EDITOR_HEIGHT_IN_PX_FOR_ADD_NOTE}px`,
+                    }}
                     value={noteBodyHTML}
                     onChange={onChangeText}
                   />
