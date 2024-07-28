@@ -74,6 +74,7 @@ export default function NewNoteDialog() {
           id: generateId(),
           title: noteTitle,
           body: noteBody,
+          tags: ['react'],
         })
       );
       setIsDialogOpen(false);
