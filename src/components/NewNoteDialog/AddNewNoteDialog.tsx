@@ -12,6 +12,7 @@ import {
   makeStyles,
   Field,
   Textarea,
+  Caption1,
 } from '@fluentui/react-components';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -128,7 +129,7 @@ export default function NewNoteDialog() {
               <DialogTitle>Add New Note</DialogTitle>
               <DialogContent className={styles.content}>
                 <Label required htmlFor='note-title'>
-                  Note title
+                  Title
                 </Label>
                 <Input
                   required
@@ -141,14 +142,16 @@ export default function NewNoteDialog() {
                   <span className={styles.errorMessage}>{errors.title}</span>
                 )}
                 <Label required htmlFor='note-body'>
-                  Note Body
+                  Body
                 </Label>
                 <Field label=''>
                   <Editor value={noteBodyHTML} onChange={onChangeText} />
                 </Field>
-                <Label required htmlFor='note-body'>
-                  Tags Dropdown
-                </Label>
+                <Label htmlFor='note-body'>Tags:</Label>
+                <Caption1>
+                  💡Tip: Navigate to Tags page to create tags and those will be
+                  available here.
+                </Caption1>
                 <Field label=''>
                   <TagsDropdown
                     setSelectedOptionsFromParent={setSelectedTags}
