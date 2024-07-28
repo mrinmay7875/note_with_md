@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { redirect, useParams } from '@tanstack/react-router';
+import { Link, redirect, useNavigate, useParams } from '@tanstack/react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Card,
@@ -51,6 +51,7 @@ const useStyles = makeStyles({
 const NoteDetail = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Fetching the noteID from route params
   const noteId = useParams({
@@ -91,93 +92,99 @@ const NoteDetail = () => {
       dispatch(
         deleteNote({ id: noteId, title: editedTitle, body: editedBody })
       );
-      alert('Note deleted successfully!');
       // TODO: Redirect to notes list once the Note is deleted
-      // window.location.href = '/';
+      navigate({ to: '/' });
     }
   };
 
   return (
-    <Card className={styles.card}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <CardHeader
-          header={
-            isEditing ? (
-              <Input
-                size='medium'
-                className={styles.editableInput}
-                value={editedTitle}
-                onChange={(e) => setEditedTitle(e.target.value)}
-              />
-            ) : (
-              <Title1 className={styles.header}>{note.title}</Title1>
-            )
-          }
-        />
-        <div>
-          {isEditing ? (
-            <Button
-              appearance='primary'
-              icon={<SaveRegular />}
-              onClick={handleSave}
-            >
-              Save
-            </Button>
-          ) : (
-            <Button
-              appearance='primary'
-              icon={<EditRegular />}
-              onClick={handleEdit}
-            >
-              Edit
-            </Button>
-          )}
-          <Button
-            style={{ marginLeft: '8px' }}
-            appearance='primary'
-            icon={<DeleteRegular />}
-            onClick={handleDelete}
-          >
-            Delete
-          </Button>
-        </div>
-      </div>
-
-      <CardPreview>
-        <div className={styles.tagSection}>
-          <Label>Tags: </Label>
-          {note.tags && note.tags.length > 0 ? (
-            note.tags.map((tag: string, index: number) => (
-              <Badge
-                key={index}
-                className={styles.tag}
-                appearance='filled'
-                color='brand'
+    <div>
+      <Card className={styles.card}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <CardHeader
+            header={
+              isEditing ? (
+                <Input
+                  size='medium'
+                  className={styles.editableInput}
+                  value={editedTitle}
+                  onChange={(e) => setEditedTitle(e.target.value)}
+                />
+              ) : (
+                <Title1 className={styles.header}>{note.title}</Title1>
+              )
+            }
+          />
+          <div>
+            {isEditing ? (
+              <Button
+                appearance='primary'
+                icon={<SaveRegular />}
+                onClick={handleSave}
               >
-                {tag}
-              </Badge>
-            ))
-          ) : (
-            <Text>No tags</Text>
-          )}
+                Save
+              </Button>
+            ) : (
+              <Button
+                appearance='primary'
+                icon={<EditRegular />}
+                onClick={handleEdit}
+              >
+                Edit
+              </Button>
+            )}
+            <Button
+              style={{ marginLeft: '8px' }}
+              appearance='primary'
+              icon={<DeleteRegular />}
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+          </div>
         </div>
-      </CardPreview>
-      {isEditing ? (
-        <Textarea
-          className={styles.body}
-          value={editedBody}
-          onChange={(e) => setEditedBody(e.target.value)}
-        />
-      ) : (
-        <Body1 className={styles.body}>{note.body}</Body1>
-      )}
-    </Card>
+
+        <CardPreview>
+          <div className={styles.tagSection}>
+            <Label>Tags: </Label>
+            {note.tags && note.tags.length > 0 ? (
+              note.tags.map((tag: string, index: number) => (
+                <Badge
+                  key={index}
+                  className={styles.tag}
+                  appearance='filled'
+                  color='brand'
+                >
+                  {tag}
+                </Badge>
+              ))
+            ) : (
+              <Text>No tags</Text>
+            )}
+          </div>
+        </CardPreview>
+        {isEditing ? (
+          <Textarea
+            className={styles.body}
+            value={editedBody}
+            onChange={(e) => setEditedBody(e.target.value)}
+          />
+        ) : (
+          <Body1 className={styles.body}>{note.body}</Body1>
+        )}
+      </Card>
+      <div
+        style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}
+      >
+        <Link to='/'>Home</Link>
+      </div>
+    </div>
   );
 };
 
