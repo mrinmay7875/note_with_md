@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, redirect, useNavigate, useParams } from '@tanstack/react-router';
+import { useState } from 'react';
+import { Link, useNavigate, useParams } from '@tanstack/react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Card,
@@ -15,11 +15,28 @@ import {
   Badge,
   Button,
   Input,
-  Textarea,
 } from '@fluentui/react-components';
 
 import { EditRegular, DeleteRegular, SaveRegular } from '@fluentui/react-icons';
 import { deleteNote, updateNote } from '../../slice/noteSlice';
+import {
+  BtnBold,
+  BtnBulletList,
+  BtnClearFormatting,
+  BtnItalic,
+  BtnLink,
+  BtnNumberedList,
+  BtnRedo,
+  BtnStrikeThrough,
+  BtnStyles,
+  BtnUnderline,
+  BtnUndo,
+  Editor,
+  EditorProvider,
+  HtmlButton,
+  Separator,
+  Toolbar,
+} from 'react-simple-wysiwyg';
 
 const useStyles = makeStyles({
   card: {
@@ -170,13 +187,35 @@ const NoteDetail = () => {
           </div>
         </CardPreview>
         {isEditing ? (
-          <Textarea
-            className={styles.body}
-            value={editedBody}
-            onChange={(e) => setEditedBody(e.target.value)}
-          />
+          <EditorProvider>
+            <Editor
+              value={editedBody}
+              onChange={(e) => setEditedBody(e.target.value)}
+            >
+              <Toolbar>
+                <BtnUndo />
+                <BtnRedo />
+                <Separator />
+                <BtnBold />
+                <BtnItalic />
+                <BtnUnderline />
+                <BtnStrikeThrough />
+                <Separator />
+                <BtnNumberedList />
+                <BtnBulletList />
+                <Separator />
+                <BtnLink />
+                <BtnClearFormatting />
+                <HtmlButton />
+                <Separator />
+                <BtnStyles />
+              </Toolbar>
+            </Editor>
+          </EditorProvider>
         ) : (
-          <Body1 className={styles.body}>{note.body}</Body1>
+          <Body1>
+            <div dangerouslySetInnerHTML={{ __html: note.body }} />
+          </Body1>
         )}
       </Card>
       <div
