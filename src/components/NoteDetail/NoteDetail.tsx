@@ -12,12 +12,15 @@ import {
   shorthands,
   tokens,
   Badge,
+  Button,
 } from '@fluentui/react-components';
+
+import { EditRegular, DeleteRegular } from '@fluentui/react-icons';
 
 const useStyles = makeStyles({
   card: {
     ...shorthands.margin('auto'),
-    maxWidth: '600px',
+    maxWidth: '80%',
     ...shorthands.padding('20px'),
     boxShadow: tokens.shadow4,
   },
@@ -58,9 +61,30 @@ const NoteDetail = () => {
 
   return (
     <Card className={styles.card}>
-      <CardHeader
-        header={<Title1 className={styles.header}>{note.title}</Title1>}
-      />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <CardHeader
+          header={<Title1 className={styles.header}>{note.title}</Title1>}
+        />
+        <div>
+          <Button appearance='primary' icon={<EditRegular />}>
+            Edit
+          </Button>
+          <Button
+            style={{ marginLeft: '8px' }}
+            appearance='primary'
+            icon={<DeleteRegular />}
+          >
+            Delete
+          </Button>
+        </div>
+      </div>
+
       <CardPreview>
         <div className={styles.tagSection}>
           <Label>Tags: </Label>

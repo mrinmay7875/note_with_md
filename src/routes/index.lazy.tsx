@@ -25,7 +25,7 @@ function Index() {
         <AddNewNoteDialog />
       </Field>
       <br />
-      {notes.map((note: Note) => (
+    {notes.map((note: Note) => (
         <div key={note.id}>
           <NoteCard
             key={note.id}
