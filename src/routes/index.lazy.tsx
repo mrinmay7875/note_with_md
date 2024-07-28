@@ -5,6 +5,7 @@ import './Home.css';
 import AddNewNoteDialog from '../components/NewNoteDialog/AddNewNoteDialog';
 import { useDispatch, useSelector } from 'react-redux';
 import { decrement, increment } from '../slice/counterSlice';
+import store from '../store/store';
 
 export const Route = createLazyFileRoute('/')({
   component: Index,
@@ -12,6 +13,12 @@ export const Route = createLazyFileRoute('/')({
 
 function Index() {
   const count = useSelector((state: any) => state.counter.value);
+  const notes = useSelector((state: any) => state.notes);
+  console.log('notes', notes);
+
+  store.subscribe(() => {
+    console.log(store.getState());
+  });
 
   const dispatch = useDispatch();
   return (

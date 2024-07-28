@@ -14,6 +14,9 @@ import {
   Textarea,
 } from '@fluentui/react-components';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addNote } from '../../slice/noteSlice';
+import store from '../../store/store';
 
 const useStyles = makeStyles({
   content: {
@@ -33,6 +36,7 @@ export default function NewNoteDialog() {
   const styles = useStyles();
   const [errors, setErrors] = useState({ title: '', body: '' });
 
+  const dispatch = useDispatch();
   /**
    * Handles the form submission event.
    * Validates the note title and body fields, and displays error messages if they are empty.
@@ -62,10 +66,19 @@ export default function NewNoteDialog() {
 
     // TODO: Store the Note in Redux Store
     if (!hasError) {
-      console.log('Note Title:', noteTitle);
-      console.log('Note Body:', noteBody);
+      dispatch(
+        addNote({
+          id: Date.now().toString(),
+          title: noteTitle,
+          body: noteBody,
+        })
+      );
     }
   };
+
+  store.subscribe(() => {
+    console.log('store inside AddNewDialog', store.getState());
+  });
 
   /**
    * Handles the change event of the title input field.

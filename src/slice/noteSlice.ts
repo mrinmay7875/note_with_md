@@ -3,14 +3,16 @@ import { Note } from '../types/type';
 
 const notesSlice = createSlice({
   name: 'notes',
-  initialState: Note[],
+  initialState: [],
   reducers: {
-    addNote: (state, action: { payload: Note }) => {
+    addNote: (state: Note[], action: { payload: Note }) => {
       state.push(action.payload);
     },
-    updateNote: (state, action) => {
+    updateNote: (state: Note[], action) => {
       const { id, title, body } = action.payload;
-      const existingNote: Note = state.find((note) => note.id === id);
+      const existingNote: Note | undefined = state.find(
+        (note: Note) => note.id === id
+      );
       if (existingNote) {
         existingNote.title = title;
         existingNote.body = body;
@@ -18,7 +20,7 @@ const notesSlice = createSlice({
     },
     deleteNote: (state, action) => {
       const { id } = action.payload;
-      return state.filter((note) => note.id !== id);
+      return state.filter((note: Note) => note.id !== id);
     },
   },
 });
