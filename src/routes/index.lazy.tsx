@@ -21,8 +21,10 @@ function Index() {
       </Field>
       <Field>
         <br />
+        <br />
         <AddNewNoteDialog />
       </Field>
+      <br />
       {notes.map((note: Note) => (
         <div key={note.id}>
           <NoteCard
@@ -30,6 +32,7 @@ function Index() {
             title={note.title}
             id={note.id}
             tags={['react']}
+            body={note.body}
           />
           <br />
         </div>

@@ -14,6 +14,7 @@ type NoteCardProps = {
   id: string;
   title: string;
   tags: string[];
+  body: string;
 };
 
 const useStyles = makeStyles({
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function NoteCard({ title, tags, id }: NoteCardProps) {
+export default function NoteCard({ title, tags, id, body }: NoteCardProps) {
   const styles = useStyles();
 
   return (
@@ -38,7 +39,13 @@ export default function NoteCard({ title, tags, id }: NoteCardProps) {
               </Link>
             </Body1>
           }
-          description={<Caption1>Note Content....</Caption1>}
+          description={
+            <Caption1>
+              {body.length > 50
+                ? body.slice(0, 100) + '...'
+                : body.slice(0, 50)}
+            </Caption1>
+          }
         />
         <div className={'tagsContainer'}>
           {tags.map((tag, index) => (

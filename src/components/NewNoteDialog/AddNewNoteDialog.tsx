@@ -83,10 +83,6 @@ export default function NewNoteDialog() {
     }
   };
 
-  store.subscribe(() => {
-    console.log('store inside AddNewDialog', store.getState());
-  });
-
   /**
    * Handles the change event of the title input field.
    * Clears the error message for the title field if it exists.
