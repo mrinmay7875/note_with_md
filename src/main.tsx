@@ -18,7 +18,10 @@ declare module '@tanstack/react-router' {
 }
 
 import store from './store/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 
+const persistor = persistStore(store);
 // Render the app
 const rootElement = document.getElementById('root')!;
 if (!rootElement.innerHTML) {
@@ -26,9 +29,11 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <Provider store={store}>
-        <FluentProvider theme={webLightTheme}>
-          <RouterProvider router={router} />
-        </FluentProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <FluentProvider theme={webLightTheme}>
+            <RouterProvider router={router} />
+          </FluentProvider>
+        </PersistGate>
       </Provider>
     </StrictMode>
   );
