@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import { addNote } from '../../slice/noteSlice';
 import store from '../../store/store';
 import generateId from '../../utils/generateUniqueId';
+import { TagsDropdown } from '../TagsDropdown/TagsDropdown';
 
 const useStyles = makeStyles({
   content: {
@@ -146,6 +147,12 @@ export default function NewNoteDialog() {
                     name='note-body'
                     onChange={handleBodyChange}
                   />
+                </Field>
+                <Label required htmlFor='note-body'>
+                  Tags Dropdown
+                </Label>
+                <Field label=''>
+                  <TagsDropdown />
                 </Field>
                 {errors.body && (
                   <span className={styles.errorMessage}>{errors.body}</span>
