@@ -45,7 +45,7 @@ function Index() {
           <NoteCard
             key={note.id}
             title={note.title}
-            tags={['react']}
+            tags={note.tags ?? []}
             id={note.id}
             body={note.body}
           />

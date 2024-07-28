@@ -38,7 +38,10 @@ export default function NewNoteDialog() {
   const styles = useStyles();
   const [errors, setErrors] = useState({ title: '', body: '' });
 
+  // Tracks whether the Add new note dialog is open or not
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const dispatch = useDispatch();
   /**
@@ -70,12 +73,13 @@ export default function NewNoteDialog() {
 
     // TODO: Store the Note in Redux Store
     if (!hasError) {
+      console.log('selectedTags', selectedTags);
       dispatch(
         addNote({
           id: generateId(),
           title: noteTitle,
           body: noteBody,
-          tags: ['react'],
+          tags: selectedTags,
         })
       );
       setIsDialogOpen(false);
@@ -152,7 +156,9 @@ export default function NewNoteDialog() {
                   Tags Dropdown
                 </Label>
                 <Field label=''>
-                  <TagsDropdown />
+                  <TagsDropdown
+                    setSelectedOptionsFromParent={setSelectedTags}
+                  />
                 </Field>
                 {errors.body && (
                   <span className={styles.errorMessage}>{errors.body}</span>

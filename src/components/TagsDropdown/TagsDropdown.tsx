@@ -29,7 +29,13 @@ const useStyles = makeStyles({
   },
 });
 
-export const TagsDropdown = (props: Partial<ComboboxProps>) => {
+type TagsDropdownProps = {
+  setSelectedOptionsFromParent: any;
+};
+
+export const TagsDropdown = ({
+  setSelectedOptionsFromParent,
+}: TagsDropdownProps) => {
   // generate ids for handling labelling
   const comboId = useId('combo-multi');
   const selectedListId = `${comboId}-selection`;
@@ -47,11 +53,14 @@ export const TagsDropdown = (props: Partial<ComboboxProps>) => {
 
   const onSelect: ComboboxProps['onOptionSelect'] = (event, data) => {
     setSelectedOptions(data.selectedOptions);
+
+    setSelectedOptionsFromParent(data.selectedOptions);
   };
 
   const onTagClick = (option: string, index: number) => {
     // remove selected option
     setSelectedOptions(selectedOptions.filter((o) => o !== option));
+    setSelectedOptionsFromParent(selectedOptions.filter((o) => o !== option));
 
     // focus previous or next option, defaulting to focusing back to the combo input
     const indexToFocus = index === 0 ? 1 : index - 1;
@@ -105,7 +114,6 @@ export const TagsDropdown = (props: Partial<ComboboxProps>) => {
         selectedOptions={selectedOptions}
         onOptionSelect={onSelect}
         ref={comboboxInputRef}
-        {...props}
       >
         {options.map((option) => (
           <Option key={option}>{option}</Option>
