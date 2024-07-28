@@ -16,7 +16,6 @@ import {
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addNote } from '../../slice/noteSlice';
-import store from '../../store/store';
 import generateId from '../../utils/generateUniqueId';
 import { TagsDropdown } from '../TagsDropdown/TagsDropdown';
 
@@ -71,7 +70,6 @@ export default function NewNoteDialog() {
 
     setErrors(newErrors);
 
-    // TODO: Store the Note in Redux Store
     if (!hasError) {
       console.log('selectedTags', selectedTags);
       dispatch(
