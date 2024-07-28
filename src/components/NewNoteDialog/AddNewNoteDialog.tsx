@@ -36,6 +36,8 @@ export default function NewNoteDialog() {
   const styles = useStyles();
   const [errors, setErrors] = useState({ title: '', body: '' });
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const dispatch = useDispatch();
   /**
    * Handles the form submission event.
@@ -73,6 +75,9 @@ export default function NewNoteDialog() {
           body: noteBody,
         })
       );
+      setIsDialogOpen(false);
+
+      // Hide the dialog once the Note is updated
     }
   };
 
@@ -108,9 +113,11 @@ export default function NewNoteDialog() {
 
   return (
     <div>
-      <Dialog modalType='non-modal'>
+      <Dialog open={isDialogOpen} modalType='alert'>
         <DialogTrigger disableButtonEnhancement>
-          <Button appearance='primary'>Create Note</Button>
+          <Button appearance='primary' onClick={() => setIsDialogOpen(true)}>
+            Create Note
+          </Button>
         </DialogTrigger>
         <DialogSurface aria-describedby={undefined}>
           <form onSubmit={handleSubmit}>
@@ -148,7 +155,12 @@ export default function NewNoteDialog() {
               </DialogContent>
               <DialogActions>
                 <DialogTrigger disableButtonEnhancement>
-                  <Button appearance='secondary'>Close</Button>
+                  <Button
+                    onClick={() => setIsDialogOpen(false)}
+                    appearance='secondary'
+                  >
+                    Close
+                  </Button>
                 </DialogTrigger>
                 <Button type='submit' appearance='primary'>
                   Save
