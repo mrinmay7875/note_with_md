@@ -9,6 +9,8 @@ import {
 } from '@fluentui/react-components';
 import type { ComboboxProps } from '@fluentui/react-components';
 import { Dismiss12Regular } from '@fluentui/react-icons';
+import { useSelector } from 'react-redux';
+import { Tag } from '../../types/type';
 
 const useStyles = makeStyles({
   root: {
@@ -44,7 +46,10 @@ export const TagsDropdown = ({
   const selectedListRef = React.useRef<HTMLUListElement>(null);
   const comboboxInputRef = React.useRef<HTMLInputElement>(null);
 
-  const options = ['react', 'node', 'javascript', 'Typescript', 'git', 'code'];
+  // Fetch list of Tags from Store
+  const options = useSelector((state: any) => state.tags).map((tag: Tag) => {
+    return tag.name;
+  });
   const styles = useStyles();
 
   // Handle selectedOptions both when an option is selected or deselected in the Combobox,
