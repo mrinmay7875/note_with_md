@@ -41,7 +41,7 @@ function Index() {
       </Field>
       <br />
       {filteredNotes.map((note: Note) => (
-        <div>
+        <div key={note.id}>
           <NoteCard
             key={note.id}
             title={note.title}
