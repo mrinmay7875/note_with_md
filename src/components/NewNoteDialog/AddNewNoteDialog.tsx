@@ -18,7 +18,7 @@ import { useDispatch } from 'react-redux';
 import { addNote } from '../../slice/noteSlice';
 import generateId from '../../utils/generateUniqueId';
 import { TagsDropdown } from '../TagsDropdown/TagsDropdown';
-
+import Editor from 'react-simple-wysiwyg';
 const useStyles = makeStyles({
   content: {
     display: 'flex',
@@ -43,6 +43,13 @@ export default function NewNoteDialog() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const dispatch = useDispatch();
+
+  const [noteBodyHTML, setNoteBodyHTML] = useState('');
+
+  function onChangeText(e) {
+    setNoteBodyHTML(e.target.value);
+    console.log('html', noteBodyHTML);
+  }
   /**
    * Handles the form submission event.
    * Validates the note title and body fields, and displays error messages if they are empty.
@@ -54,7 +61,7 @@ export default function NewNoteDialog() {
     ev.preventDefault();
     const formData = new FormData(ev.currentTarget as HTMLFormElement);
     const noteTitle = formData.get('note-title') as string;
-    const noteBody = formData.get('note-body') as string;
+    // const noteBody = formData.get('note-body') as string;
 
     let hasError = false;
     const newErrors = { title: '', body: '' };
@@ -63,7 +70,7 @@ export default function NewNoteDialog() {
       newErrors.title = 'Note title is required';
       hasError = true;
     }
-    if (!noteBody.trim()) {
+    if (!noteBodyHTML.trim()) {
       newErrors.body = 'Note body is required';
       hasError = true;
     }
@@ -76,7 +83,7 @@ export default function NewNoteDialog() {
         addNote({
           id: generateId(),
           title: noteTitle,
-          body: noteBody,
+          body: noteBodyHTML,
           tags: selectedTags,
         })
       );
@@ -106,11 +113,6 @@ export default function NewNoteDialog() {
    * @param {React.ChangeEvent<HTMLTextAreaElement>} ev - The change event object.
    * @return {void} This function does not return anything.
    */
-  const handleBodyChange = () => {
-    if (errors.body) {
-      setErrors((prevErrors) => ({ ...prevErrors, body: '' }));
-    }
-  };
 
   return (
     <div>
@@ -142,13 +144,7 @@ export default function NewNoteDialog() {
                   Note Body
                 </Label>
                 <Field label=''>
-                  <Textarea
-                    size='large'
-                    resize='vertical'
-                    id='note-body'
-                    name='note-body'
-                    onChange={handleBodyChange}
-                  />
+                  <Editor value={noteBodyHTML} onChange={onChangeText} />
                 </Field>
                 <Label required htmlFor='note-body'>
                   Tags Dropdown
@@ -158,6 +154,7 @@ export default function NewNoteDialog() {
                     setSelectedOptionsFromParent={setSelectedTags}
                   />
                 </Field>
+
                 {errors.body && (
                   <span className={styles.errorMessage}>{errors.body}</span>
                 )}
