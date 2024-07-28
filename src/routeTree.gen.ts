@@ -17,10 +17,16 @@ import { Route as NotesNoteIdImport } from './routes/notes.$noteId'
 
 // Create Virtual Routes
 
+const TagsLazyImport = createFileRoute('/tags')()
 const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const TagsLazyRoute = TagsLazyImport.update({
+  path: '/tags',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/tags.lazy').then((d) => d.Route))
 
 const AboutLazyRoute = AboutLazyImport.update({
   path: '/about',
@@ -55,6 +61,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutLazyImport
       parentRoute: typeof rootRoute
     }
+    '/tags': {
+      id: '/tags'
+      path: '/tags'
+      fullPath: '/tags'
+      preLoaderRoute: typeof TagsLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/notes/$noteId': {
       id: '/notes/$noteId'
       path: '/notes/$noteId'
@@ -70,6 +83,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   AboutLazyRoute,
+  TagsLazyRoute,
   NotesNoteIdRoute,
 })
 
@@ -83,6 +97,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/about",
+        "/tags",
         "/notes/$noteId"
       ]
     },
@@ -91,6 +106,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/about": {
       "filePath": "about.lazy.tsx"
+    },
+    "/tags": {
+      "filePath": "tags.lazy.tsx"
     },
     "/notes/$noteId": {
       "filePath": "notes.$noteId.tsx"
