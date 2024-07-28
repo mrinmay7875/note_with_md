@@ -8,8 +8,10 @@ import {
 } from '@fluentui/react-components';
 
 import './NoteCard.css';
+import { Link } from '@tanstack/react-router';
 
 type NoteCardProps = {
+  id: string;
   title: string;
   tags: string[];
 };
@@ -22,7 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function NoteCard({ title, tags }: NoteCardProps) {
+export default function NoteCard({ title, tags, id }: NoteCardProps) {
   const styles = useStyles();
 
   return (
@@ -31,7 +33,9 @@ export default function NoteCard({ title, tags }: NoteCardProps) {
         <CardHeader
           header={
             <Body1>
-              <b>{title}</b>
+              <Link to='/notes/$noteId' params={{ noteId: id }}>
+                {title}
+              </Link>
             </Body1>
           }
           description={<Caption1>Note Content....</Caption1>}

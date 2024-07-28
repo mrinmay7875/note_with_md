@@ -12,7 +12,6 @@ export const Route = createLazyFileRoute('/')({
 
 function Index() {
   const notes = useSelector((state: any) => state.notes);
-  // console.log('notes inside me', notes);
 
   return (
     <div className='mainContainer'>
@@ -26,7 +25,12 @@ function Index() {
       </Field>
       {notes.map((note: Note) => (
         <div key={note.id}>
-          <NoteCard key={note.id} title={note.title} tags={['react']} />
+          <NoteCard
+            key={note.id}
+            title={note.title}
+            id={note.id}
+            tags={['react']}
+          />
           <br />
         </div>
       ))}
