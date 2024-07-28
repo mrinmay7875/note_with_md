@@ -26,7 +26,6 @@ function Index() {
   return (
     <div className='mainContainer'>
       <Field style={{ position: 'relative', right: '4%' }}>
-        {/* TODO:  Increase the width of the search box */}
         <SearchBox
           style={{ width: '150%' }}
           placeholder='Search for notes..'
@@ -37,13 +36,22 @@ function Index() {
       </Field>
       <Field>
         <br />
-        <br />
         <AddNewNoteDialog />
       </Field>
       <br />
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+        }}
+      >
         {filteredNotes.map((note: Note) => (
-          <div key={note.id} style={{ flex: '0 0 300px', margin: '10px' }}>
+          <div
+            key={note.id}
+            style={{ flex: '0 0 300px', marginBottom: '1.5rem' }}
+            className='noteCard'
+          >
             <NoteCard
               key={note.id}
               title={note.title}

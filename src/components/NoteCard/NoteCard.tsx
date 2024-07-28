@@ -20,12 +20,12 @@ type NoteCardProps = {
 
 const useStyles = makeStyles({
   card: {
-    margin: 'auto',
     width: '250px',
     minWidth: '250px',
     maxWidth: '250px',
     minHeight: '150px',
     maxHeight: '150px',
+    border: 'solid lightgray 1px',
   },
 });
 
