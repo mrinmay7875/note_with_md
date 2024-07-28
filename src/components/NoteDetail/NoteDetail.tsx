@@ -223,7 +223,12 @@ const NoteDetail = () => {
         )}
       </Card>
       <div
-        style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '16px',
+          fontSize: '1.1rem',
+        }}
       >
         <Link to='/'>Home</Link>
       </div>

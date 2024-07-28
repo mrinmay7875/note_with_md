@@ -5,7 +5,7 @@ import {
   SearchBox,
   SearchBoxChangeEvent,
 } from '@fluentui/react-components';
-import './Home.css';
+import './HomePage.css';
 import AddNewNoteDialog from '../components/NewNoteDialog/AddNewNoteDialog';
 import { useSelector } from 'react-redux';
 import { Note } from '../types/type';
@@ -25,9 +25,10 @@ function Index() {
 
   return (
     <div className='mainContainer'>
-      <Field className='m-50'>
+      <Field style={{ position: 'relative', right: '4%' }}>
         {/* TODO:  Increase the width of the search box */}
         <SearchBox
+          style={{ width: '150%' }}
           placeholder='Search for notes..'
           onChange={(e: SearchBoxChangeEvent) =>
             setSearchKeyword((e.target as HTMLInputElement).value)
