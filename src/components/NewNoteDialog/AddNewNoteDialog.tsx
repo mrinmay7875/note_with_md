@@ -60,6 +60,7 @@ export default function NewNoteDialog() {
 
     setErrors(newErrors);
 
+    // TODO: Store the Note in Redux Store
     if (!hasError) {
       console.log('Note Title:', noteTitle);
       console.log('Note Body:', noteBody);

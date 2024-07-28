@@ -3,14 +3,22 @@ import NoteCard from '../components/NoteCard/NoteCard';
 import { Field, SearchBox } from '@fluentui/react-components';
 import './Home.css';
 import AddNewNoteDialog from '../components/NewNoteDialog/AddNewNoteDialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { decrement, increment } from '../slice/counterSlice';
 
 export const Route = createLazyFileRoute('/')({
   component: Index,
 });
 
 function Index() {
+  const count = useSelector((state: any) => state.counter.value);
+
+  const dispatch = useDispatch();
   return (
     <div className='mainContainer'>
+      <h1>Count: {count}</h1>
+      <button onClick={() => dispatch(increment())}>Increment</button>
+      <button onClick={() => dispatch(decrement())}>Decrement</button>
       <Field className='m-50'>
         {/* TODO:  Increase the width of the search box */}
         <SearchBox placeholder='Search for notes..' />
