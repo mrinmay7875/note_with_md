@@ -16,6 +16,7 @@ const TagsList = () => {
     ev.preventDefault();
     const formData = new FormData(ev.currentTarget as HTMLFormElement);
     const tagName = formData.get('tag-name') as string;
+    if (!tagName) return;
     dispatch(addTag({ name: tagName, id: generateId() }));
   };
 
