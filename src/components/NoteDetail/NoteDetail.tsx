@@ -1,5 +1,6 @@
+import React, { useState } from 'react';
 import { useParams } from '@tanstack/react-router';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Card,
   CardHeader,
@@ -13,9 +14,12 @@ import {
   tokens,
   Badge,
   Button,
+  Input,
+  Textarea,
 } from '@fluentui/react-components';
 
-import { EditRegular, DeleteRegular } from '@fluentui/react-icons';
+import { EditRegular, DeleteRegular, SaveRegular } from '@fluentui/react-icons';
+import { deleteNote, updateNote } from '../../slice/noteSlice';
 
 const useStyles = makeStyles({
   card: {
@@ -29,6 +33,7 @@ const useStyles = makeStyles({
   },
   body: {
     marginTop: '16px',
+    width: '100%',
   },
   tagSection: {
     marginTop: '16px',
@@ -37,10 +42,15 @@ const useStyles = makeStyles({
     marginRight: '8px',
     marginBottom: '8px',
   },
+  editableInput: {
+    width: '100%',
+    marginBottom: '16px',
+  },
 });
 
 const NoteDetail = () => {
   const styles = useStyles();
+  const dispatch = useDispatch();
 
   // Fetching the noteID from route params
   const noteId = useParams({
@@ -51,6 +61,10 @@ const NoteDetail = () => {
   const notes = useSelector((state: any) => state.notes);
   const note = notes.find((note: any) => note.id === noteId);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState(note?.title || '');
+  const [editedBody, setEditedBody] = useState(note?.body || '');
+
   if (!note) {
     return (
       <Card className={styles.card}>
@@ -58,6 +72,23 @@ const NoteDetail = () => {
       </Card>
     );
   }
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleSave = () => {
+    // Dispatch an action to update the note in your Redux store
+    dispatch(updateNote({ id: noteId, title: editedTitle, body: editedBody }));
+    setIsEditing(false);
+  };
+
+  const handleDelete = () => {
+    // Dispatch an action to delete the note from your Redux store
+    dispatch(deleteNote(noteId));
+
+    // TODO: Redirect to notes list once the Note is deleted
+  };
 
   return (
     <Card className={styles.card}>
@@ -69,16 +100,42 @@ const NoteDetail = () => {
         }}
       >
         <CardHeader
-          header={<Title1 className={styles.header}>{note.title}</Title1>}
+          header={
+            isEditing ? (
+              <Input
+                size='medium'
+                className={styles.editableInput}
+                value={editedTitle}
+                onChange={(e) => setEditedTitle(e.target.value)}
+              />
+            ) : (
+              <Title1 className={styles.header}>{note.title}</Title1>
+            )
+          }
         />
         <div>
-          <Button appearance='primary' icon={<EditRegular />}>
-            Edit
-          </Button>
+          {isEditing ? (
+            <Button
+              appearance='primary'
+              icon={<SaveRegular />}
+              onClick={handleSave}
+            >
+              Save
+            </Button>
+          ) : (
+            <Button
+              appearance='primary'
+              icon={<EditRegular />}
+              onClick={handleEdit}
+            >
+              Edit
+            </Button>
+          )}
           <Button
             style={{ marginLeft: '8px' }}
             appearance='primary'
             icon={<DeleteRegular />}
+            onClick={handleDelete}
           >
             Delete
           </Button>
@@ -104,7 +161,15 @@ const NoteDetail = () => {
           )}
         </div>
       </CardPreview>
-      <Body1 className={styles.body}>{note.body}</Body1>
+      {isEditing ? (
+        <Textarea
+          className={styles.body}
+          value={editedBody}
+          onChange={(e) => setEditedBody(e.target.value)}
+        />
+      ) : (
+        <Body1 className={styles.body}>{note.body}</Body1>
+      )}
     </Card>
   );
 };
