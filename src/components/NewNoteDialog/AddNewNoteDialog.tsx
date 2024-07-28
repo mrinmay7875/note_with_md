@@ -145,7 +145,11 @@ export default function NewNoteDialog() {
                   Body
                 </Label>
                 <Field label=''>
-                  <Editor value={noteBodyHTML} onChange={onChangeText} />
+                  <Editor
+                    style={{ height: '280px' }}
+                    value={noteBodyHTML}
+                    onChange={onChangeText}
+                  />
                 </Field>
                 <Label htmlFor='note-body'>Tags:</Label>
                 <Caption1>
