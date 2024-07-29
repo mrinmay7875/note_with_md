@@ -17,6 +17,12 @@ const TagsList = () => {
     ev.preventDefault();
     const formData = new FormData(ev.currentTarget as HTMLFormElement);
     const tagName = formData.get('tag-name') as string;
+    // Prevent users from adding duplicate tag names
+    const foundTag = tags.find((tag) => tag.name === tagName);
+    if (foundTag) {
+      alert('Tag already exists');
+      return;
+    }
     if (!tagName) return;
     dispatch(addTag({ name: tagName, id: generateId() }));
   };
