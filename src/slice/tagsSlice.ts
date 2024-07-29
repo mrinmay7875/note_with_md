@@ -3,10 +3,7 @@ import { Tag } from '../types/type';
 
 const tagsSlice = createSlice({
   name: 'tags',
-  initialState: [
-    { id: '1', name: 'react' },
-    { id: '2', name: 'node' },
-  ],
+  initialState: [],
   reducers: {
     addTag: (state: Tag[], action: { payload: Tag }) => {
       state.push(action.payload);
