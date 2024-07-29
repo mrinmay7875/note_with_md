@@ -16,7 +16,6 @@ import {
   Button,
   Input,
 } from '@fluentui/react-components';
-
 import { EditRegular, DeleteRegular, SaveRegular } from '@fluentui/react-icons';
 import { deleteNote, updateNote } from '../../slice/noteSlice';
 import {
@@ -42,12 +41,19 @@ import { RICHTEXT_EDITOR_HEIGHT_IN_PX_FOR_EDIT_NOTE } from '../../config/config'
 const useStyles = makeStyles({
   card: {
     ...shorthands.margin('auto'),
-    maxWidth: '80%',
+    maxWidth: '90%',
     ...shorthands.padding('20px'),
     boxShadow: tokens.shadow4,
+    '@media (max-width: 600px)': {
+      maxWidth: '100%',
+      padding: '10px',
+    },
   },
   header: {
     marginBottom: '16px',
+    '@media (max-width: 600px)': {
+      fontSize: '1.5rem',
+    },
   },
   body: {
     marginTop: '16px',
@@ -55,6 +61,11 @@ const useStyles = makeStyles({
   },
   tagSection: {
     marginTop: '16px',
+    flexWrap: 'wrap',
+    display: 'flex',
+    '@media (max-width: 600px)': {
+      flexDirection: 'column',
+    },
   },
   tag: {
     marginRight: '8px',
@@ -64,7 +75,21 @@ const useStyles = makeStyles({
     width: '100%',
     marginBottom: '16px',
   },
+  editorContainer: {
+    '@media (max-width: 600px)': {
+      height: `${RICHTEXT_EDITOR_HEIGHT_IN_PX_FOR_EDIT_NOTE / 1.5}px`,
+    },
+  },
+  buttonGroup: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '8px',
+    '@media (max-width: 300px)': {
+      flexDirection: 'column',
+    },
+  },
 });
+
 import type { RootState } from '../../store/store';
 import { Note } from '../../types/type';
 
@@ -79,7 +104,6 @@ const NoteDetail = () => {
     select: (params) => params.noteId,
   });
 
-  // FIXME: Remove any and resolve TS errors
   const notes = useSelector((state: RootState) => state.notes);
   const note = notes.find((n: Note) => n.id === noteId) as Note | undefined;
 
@@ -107,12 +131,10 @@ const NoteDetail = () => {
 
   const handleDelete = () => {
     // Dispatch an action to delete the note from your Redux store
-    if (confirm('Are you sure you want to delete this note ?') == true) {
-      // text = 'You pressed OK!';
+    if (confirm('Are you sure you want to delete this note?')) {
       dispatch(
         deleteNote({ id: noteId, title: editedTitle, body: editedBody })
       );
-      // TODO: Redirect to notes list once the Note is deleted
       navigate({ to: '/' });
     }
   };
@@ -123,8 +145,9 @@ const NoteDetail = () => {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            gap: '16px',
           }}
         >
           <CardHeader
@@ -141,7 +164,7 @@ const NoteDetail = () => {
               )
             }
           />
-          <div>
+          <div className={styles.buttonGroup}>
             {isEditing ? (
               <Button
                 appearance='primary'
@@ -160,7 +183,6 @@ const NoteDetail = () => {
               </Button>
             )}
             <Button
-              style={{ marginLeft: '8px' }}
               appearance='primary'
               icon={<DeleteRegular />}
               onClick={handleDelete}
@@ -192,9 +214,7 @@ const NoteDetail = () => {
         {isEditing ? (
           <EditorProvider>
             <Editor
-              style={{
-                height: `${RICHTEXT_EDITOR_HEIGHT_IN_PX_FOR_EDIT_NOTE}px`,
-              }}
+              className={styles.editorContainer}
               value={editedBody}
               onChange={(e) => setEditedBody(e.target.value)}
             >
