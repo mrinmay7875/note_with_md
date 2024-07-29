@@ -16,7 +16,12 @@ import {
   Button,
   Input,
 } from '@fluentui/react-components';
-import { EditRegular, DeleteRegular, SaveRegular } from '@fluentui/react-icons';
+import {
+  EditRegular,
+  DeleteRegular,
+  SaveRegular,
+  ArrowDownloadRegular,
+} from '@fluentui/react-icons';
 import { deleteNote, updateNote } from '../../slice/noteSlice';
 import {
   BtnBold,
@@ -113,7 +118,7 @@ const NoteDetail = () => {
   const [editedTitle, setEditedTitle] = useState<string>(note?.title || '');
   const [editedBody, setEditedBody] = useState<string>(note?.body || '');
 
-  let pdfFileName = note?.title.slice(0, 10) + '.pdf';
+  const pdfFileName = note?.title.slice(0, 10) + '.pdf';
 
   if (!note) {
     return (
@@ -270,7 +275,15 @@ const NoteDetail = () => {
           document={<PDFExport content={note.body} />}
           fileName={pdfFileName}
         >
-          {({ loading }) => (loading ? 'Loading document...' : 'Download now!')}
+          {({ loading }) =>
+            loading ? (
+              'Loading document...'
+            ) : (
+              <Button appearance='primary' icon={<ArrowDownloadRegular />}>
+                Download as PDF
+              </Button>
+            )
+          }
         </PDFDownloadLink>
       </div>
     </div>
