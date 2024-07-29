@@ -10,7 +10,9 @@ const TagsList = () => {
   const dispatch = useDispatch();
 
   const handleDelete = (id: string) => {
-    dispatch(deleteTag({ id }));
+    if (confirm('Are you sure you want to delete this tag?')) {
+      dispatch(deleteTag({ id }));
+    }
   };
 
   const handleSubmit = (ev: React.FormEvent) => {
