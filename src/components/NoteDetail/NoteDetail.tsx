@@ -92,6 +92,8 @@ const useStyles = makeStyles({
 
 import type { RootState } from '../../store/store';
 import { Note } from '../../types/type';
+import { PDFExport } from '../PDFExport';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 const NoteDetail = () => {
   const styles = useStyles();
@@ -110,6 +112,8 @@ const NoteDetail = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState<string>(note?.title || '');
   const [editedBody, setEditedBody] = useState<string>(note?.body || '');
+
+  let pdfFileName = note?.title.slice(0, 10) + '.pdf';
 
   if (!note) {
     return (
@@ -253,6 +257,21 @@ const NoteDetail = () => {
         }}
       >
         <Link to='/'>Home</Link>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '16px',
+          fontSize: '1.1rem',
+        }}
+      >
+        <PDFDownloadLink
+          document={<PDFExport content={note.body} />}
+          fileName={pdfFileName}
+        >
+          {({ loading }) => (loading ? 'Loading document...' : 'Download now!')}
+        </PDFDownloadLink>
       </div>
     </div>
   );
