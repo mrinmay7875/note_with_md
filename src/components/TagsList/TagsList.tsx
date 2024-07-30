@@ -6,7 +6,7 @@ import generateId from '../../utils/generateUniqueId';
 import { RootState } from '../../store/store';
 
 const TagsList = () => {
-  const tags: Tag[] = useSelector((state: RootState) => state.tags);
+  const tags = useSelector((state: RootState) => state.tags);
   const dispatch = useDispatch();
 
   const handleDelete = (id: string) => {
