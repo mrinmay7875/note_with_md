@@ -72,7 +72,7 @@ const useStyles = makeStyles({
     marginBottom: '8px',
   },
   editableInput: {
-    width: '100%',
+    width: '60vw',
     marginBottom: '16px',
   },
   editorContainer: {
