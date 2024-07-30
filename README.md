@@ -1,30 +1,74 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# React Note taking app
 
-Currently, two official plugins are available:
+Simple Note Taking app with Rich text and localstorage facility.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-- Configure the top-level `parserOptions` property like this:
+## Demo
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+https://note-with-rte.vercel.app/
+
+
+## Features
+
+- **Your data stays on your device:** Since we use local storage, all your notes are stored locally on your device. There is no transmission of data over the internet, ensuring complete privacy.
+- **No external access:** As your data is not sent to any external servers, there is no risk of unauthorized access or data breaches. Only you have access to your notes.
+
+
+## Tech Stack
+
+- React with TypeScript with Vite
+- Routing: Tanstack Router for Routing
+- State management: Redux with Redux tool kit 
+- Data persist: Using `redux-persist` library to store state data in localstorage
+- Styling: Fluent UI for the UI 
+
+
+
+
+## Contributing
+
+Contributions are always welcome!
+
+Feel free to create a PR.
+
+Please adhere to this project's `code of conduct`.
+
+
+## Badges
+
+Add badges from somewhere like: [shields.io](https://shields.io/)
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/mrinmay7875/note_with_md.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Go to the project directory
+
+```bash
+  cd note_with_md
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+ npm run dev
+```
+
